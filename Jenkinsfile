@@ -35,10 +35,12 @@ pipeline {
         }
         stage('Deploy using Ansible') {
             steps {
-                sh '''
-                    ansible-playbook -i hosts.ini deploy.yml
-                '''
+                withCredentials([usernamePassword(credentialsId: 'AnsibleCreds', usernameVariable: 'ANSIBLE_USER', passwordVariable: 'ANSIBLE_PASS')]) {
+                    sh '''
+                        ansible-playbook -i hosts.ini deploy.yml --extra-vars "ansible_user=$ANSIBLE_USER ansible_ssh_pass=$ANSIBLE_PASS"
+                    '''
+                }
             }
-        }
     }
+}
 }
