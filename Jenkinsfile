@@ -4,6 +4,7 @@ pipeline {
     tools {
         maven 'maven3'
     }
+
     environment {
         DOCKER_CREDENTIALS_ID = 'DockerHubCred'
         IMAGE_NAME = 'gitikapinjani19/scientific-calculator'
@@ -16,6 +17,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/gitikapinjani/scientific-calculator.git'
             }
         }
+
         stage('Build & Test') {
             steps {
                 sh 'mvn clean test'
@@ -33,6 +35,7 @@ pipeline {
                 }
             }
         }
+
         stage('Deploy using Ansible') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'AnsibleCreds', usernameVariable: 'ANSIBLE_USER', passwordVariable: 'ANSIBLE_PASS')]) {
@@ -41,6 +44,6 @@ pipeline {
                     '''
                 }
             }
-    }
-}
+        } 
+    } 
 }
