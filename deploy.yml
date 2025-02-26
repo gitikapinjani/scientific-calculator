@@ -1,10 +1,11 @@
 - hosts: local
+  become: true
   tasks:
-    - name: Ensure Docker is installed
-      apt:
-        name: docker.io
-        state: present
-      become: true
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
 
     - name: Pull Docker Image
       docker_image:
