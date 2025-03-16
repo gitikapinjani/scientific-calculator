@@ -31,5 +31,12 @@
     - name: Pull Docker Image
       command: docker pull gitikapinjani19/scientific-calculator:latest
 
+    - name: Stop and remove existing container if running
+      shell: |
+        if docker ps -q -f name=scientific-calculator; then
+          docker stop scientific-calculator && docker rm scientific-calculator
+        fi
+      ignore_errors: yes
+
     - name: Run Java Application Container
       shell: docker run -it -d --name scientific-calculator gitikapinjani19/scientific-calculator:latest /bin/bash
