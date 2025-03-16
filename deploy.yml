@@ -6,8 +6,14 @@
         name: docker.io
         state: present
 
-    - name: Pull Docker Image
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Pull Docker image
       command: docker pull gitikapinjani19/scientific-calculator:latest
 
-    - name: Run Java Application Container
-      shell: docker run -it -d --name scientific-calculator gitikapinjani19/scientific-calculator:latest /bin/bash
+    - name: Run the container
+      command: docker run -d --name scientific-calculator gitikapinjani19/scientific-calculator:latest
