@@ -1,19 +1,35 @@
 - hosts: localhost
   become: true
   tasks:
-    - name: Install Docker
+    - name: Install required system packages
       apt:
-        name: docker.io
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
         state: present
 
-    - name: Start Docker service
-      service:
+    - name: Add Docker's official GPG key
+      shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+    - name: Add Docker repository
+      shell: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+    - name: Install Docker CE
+      apt:
+        name: docker-ce
+        state: present
+        update_cache: yes
+
+    - name: Ensure Docker is running
+      systemd:
         name: docker
         state: started
         enabled: yes
 
-    - name: Pull Docker image
+    - name: Pull Docker Image
       command: docker pull gitikapinjani19/scientific-calculator:latest
 
-    - name: Run the container
-      command: docker run -d --name scientific-calculator gitikapinjani19/scientific-calculator:latest
+    - name: Run Java Application Container
+      shell: docker run -it -d --name scientific-calculator gitikapinjani19/scientific-calculator:latest /bin/bash
