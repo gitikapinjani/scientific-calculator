@@ -1,6 +1,4 @@
 - hosts: localhost
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
   become: true
   tasks:
     - name: Start Docker service
