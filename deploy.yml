@@ -1,20 +1,13 @@
 - hosts: localhost
   become: true
   tasks:
-    - name: Start Docker service
-      service:
-        name: docker
-        state: started
-        enabled: yes
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
 
     - name: Pull Docker Image
-      docker_image:
-        name: gitikapinjani19/scientific-calculator
-        source: pull
+      command: docker pull gitikapinjani19/scientific-calculator:latest
 
-    - name: Run Calculator Container
-      docker_container:
-        name: scientific-calculator
-        image: gitikapinjani19/scientific-calculator:latest
-        state: started
-        restart_policy: always
+    - name: Run Java Application Container
+      shell: docker run -it -d --name scientific-calculator gitikapinjani19/scientific-calculator:latest /bin/bash
