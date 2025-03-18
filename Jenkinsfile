@@ -38,10 +38,14 @@ pipeline {
 
         stage('Deploy using Ansible') {
             steps {
-                    sh '''
-                        ansible-playbook -i hosts.ini deploy.yml
-                    '''
-                
+                script {
+                    withEnv(["ANSIBLE_HOST_KEY_CHECKING=False"]) {
+                        ansiblePlaybook(
+                            playbook: 'deploy.yml',
+                            inventory: 'inventory'
+                        )
+                    }
+                }
             }
         } 
     } 
