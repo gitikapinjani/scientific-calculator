@@ -1,4 +1,4 @@
-package com.gaurav.calculator;
+package com.gitika.calculator;
 
 import java.util.Scanner;
 
