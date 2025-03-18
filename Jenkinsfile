@@ -1,10 +1,11 @@
 pipeline {
+
     agent any
 
     triggers{
         githubPush()
     }
-    
+
     tools {
         maven 'maven3'
     }
