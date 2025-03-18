@@ -1,4 +1,4 @@
-import com.gaurav.calculator.Calculator;
+import com.gitika.calculator.Calculator;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
